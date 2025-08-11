@@ -48,7 +48,6 @@ export async function before(m, { conn, participants }) {
     }
   }
 
-  // 🔹 Mensajes de detección de eventos de grupo
   if (!chat.detect) return;
 
   switch (m.messageStubType) {

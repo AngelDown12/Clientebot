@@ -22,7 +22,7 @@ https://wa.me/527227584934?text=.Adquirir
         externalAdReply: {
           title: '𝐁𝐨𝐭 𝐁𝐲 𝐀𝐥𝐞𝐞 👑',
           body: '𝐁𝐨𝐭 𝐁𝐲 𝐀𝐥𝐞𝐞 👑',
-          thumbnailUrl: 'https://qu.ax/FxpUy.jpg',
+          thumbnailUrl: 'https://files.catbox.moe/f4ir6m.jpg',
           sourceUrl: '',
           mediaType: 1,
           renderLargerThumbnail: false,

@@ -6,7 +6,7 @@ handler.all = async function (m) {
     if (!setting || !setting.autobio) return
 
     let uptime = clockString(process.uptime() * 1000)
-    let bio = `『${global.packname || 'Bot'}』 |「🕒」𝐀𝐜𝐭𝐢𝐯𝐨: ${uptime} |「</>」 𝐃𝐞𝐯𝐞𝐥𝐨𝐩𝐞𝐝: Anuar 🌟`
+    let bio = `『${global.packname || 'Bot'}』 |「🕒」𝐀𝐜𝐭𝐢𝐯𝐨: ${uptime} |「</>」 𝐃𝐞𝐯𝐞𝐥𝐨𝐩𝐞𝐝: Angel 🌟`
 
     await this.updateProfileStatus(bio).catch(() => {})
     setting.status = Date.now()

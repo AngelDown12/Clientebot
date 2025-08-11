@@ -1,3 +1,6 @@
+//Código optimizado y desarrollado por Angel
+
+
 let WAMessageStubType = (await import(global.baileys)).default;
 import { readdirSync, unlinkSync, existsSync, promises as fs, rmSync } from 'fs';
 import path from 'path';

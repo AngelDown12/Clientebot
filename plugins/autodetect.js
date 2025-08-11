@@ -21,7 +21,6 @@ export async function before(m, { conn, participants }) {
   const groupAdmins = participants.filter(p => p.admin);
   const listAdmin = groupAdmins.map((v, i) => `*» ${i + 1}. @${v.id.split('@')[0]}*`).join('\n');
 
-  // 🔹 Eliminación de sesiones corruptas si cambia el nombre del grupo
   if (chat.detect && m.messageStubType == 2) {
     try {
       const chatId = m.isGroup ? m.chat : m.sender;

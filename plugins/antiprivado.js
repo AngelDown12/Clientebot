@@ -20,8 +20,8 @@ https://wa.me/527227584934?text=.Adquirir
       text: mensaje,
       contextInfo: {
         externalAdReply: {
-          title: '𝐁𝐨𝐭 𝐁𝐲 𝐀𝐥𝐞𝐞 👑',
-          body: '𝐁𝐨𝐭 𝐁𝐲 𝐀𝐥𝐞𝐞 👑',
+          title: '𝘼𝙉𝙂𝙀𝙇 - 𝘽𝙊𝙏',
+          body: '',
           thumbnailUrl: 'https://files.catbox.moe/f4ir6m.jpg',
           sourceUrl: '',
           mediaType: 1,

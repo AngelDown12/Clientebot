@@ -21,7 +21,7 @@ let handler = async (m, { conn, args, usedPrefix, command }) => {
     if (!text) return conn.reply(m.chat, `𝐀𝐠𝐫𝐞𝐠𝐚 𝐓𝐞𝐱𝐭𝐨 𝐏𝐚𝐫𝐚 𝐆𝐞𝐧𝐞𝐫𝐚𝐫 𝐄𝐥 𝐒𝐭𝐢𝐜𝐤𝐞𝐫 ☁️`, m)
 
     const wordCount = text.trim().split(/\s+/).length
-    if (wordCount > 30) return m.reply('⚠️ *Máximo 30 palabras*')
+    if (wordCount > 30) return m.reply('𝐌𝐚𝐱𝐢𝐦𝐨 30 𝐏𝐚𝐥𝐚𝐛𝐫𝐚𝐬 ⚠️')
 
     let name = await conn.getName(targetUser)
     let pp = await conn.profilePictureUrl(targetUser, 'image').catch(_ => 'https://qu.ax/ZJKqt.jpg')

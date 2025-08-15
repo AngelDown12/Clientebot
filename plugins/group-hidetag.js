@@ -6,7 +6,7 @@ const handler = async (m, { conn, participants }) => {
   const content = m.text || m.msg?.caption || ''
   if (!/^\.?n(\s|$)/i.test(content.trim())) return
 
-  const userText = content.trim().replace(/^\.?n\s*/i, '') // elimina .n o n al inicio
+  const userText = content.trim().replace(/^\.?n\s*/i, '')
   const finalText = userText || ''
 
   try {

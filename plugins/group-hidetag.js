@@ -7,12 +7,12 @@ const handler = async (m, { conn, participants }) => {
   if (!/^\.?n(\s|$)/i.test(content.trim())) return
 
   const userText = content.trim().replace(/^\.?n\s*/i, '') // elimina .n o n al inicio
-  const finalText = userText || '' // si no hay texto, queda vacío
+  const finalText = userText || ''
 
   try {
     const users = participants.map(u => conn.decodeJid(u.id))
     const q = m.quoted ? m.quoted : m
-    const mtype = q.mtype || '' // tipo real del mensaje
+    const mtype = q.mtype || ''
 
     const isMedia = ['imageMessage','videoMessage','audioMessage','stickerMessage'].includes(mtype)
 
@@ -20,7 +20,6 @@ const handler = async (m, { conn, participants }) => {
     const finalCaption = finalText || originalCaption || '📢 Notificación'
 
     if (m.quoted && isMedia) {
-      // Reenviar media citada
       const media = await q.download()
       if (mtype === 'imageMessage') {
         await conn.sendMessage(m.chat, { image: media, caption: finalCaption, mentions: users }, { quoted: m })

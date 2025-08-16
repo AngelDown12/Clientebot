@@ -3,16 +3,16 @@ import PhoneNumber from 'awesome-phonenumber'
 let handler = async (m, { conn }) => {
   if (m.quoted?.fromMe || m.isButton) return
 
-  m.react('🧨')
+  m.react('🔮')
 
-  const imageUrl = 'https://files.catbox.moe/ntyp5r.jpg'
-  const numCreador = '5217227584934'
+  const imageUrl = 'https://cdn.russellxz.click/aa176879.jpeg'
+  const numCreador = '5215565238431'
   const ownerJid = numCreador + '@s.whatsapp.net'
 
-  const name = '𝐀𝐍𝐆𝐄𝐋 🧨'
-  const about = '𝐒𝐨𝐲 𝐀𝐧𝐠𝐞𝐥, 𝐃𝐮𝐞𝐧̃𝐨 𝐝𝐞𝐥 𝐁𝐨𝐭 𝐀𝐧𝐠𝐞𝐥 𝐛𝐨𝐭 🧨'
-  const empresa = '𝐀𝐧𝐠𝐞𝐥 - 𝐒𝐞𝐫𝐯𝐢𝐜𝐢𝐨𝐬 𝐭𝐞𝐜𝐧𝐨𝐥𝐨́𝐠𝐢𝐜𝐨𝐬 🧨'
-  const instagramUrl = 'https://www.instagram.com/angxll_br?igsh=MXF1NWVtZ2xuejFlOA=='
+  const name = '𝐂𝐫𝐢𝐬𝐭𝐢𝐚𝐧 🔮'
+  const about = '𝐒𝐨𝐲 𝐂𝐫𝐢𝐬𝐭𝐢𝐚𝐧, 𝐃𝐮𝐞𝐧̃𝐨 𝐃𝐞𝐥 𝐁𝐨𝐭: 𝐁𝐮𝐮 𝐛𝐨𝐭🔮'
+  const empresa = '𝐂𝐫𝐢𝐬𝐭𝐢𝐚𝐧 - 𝐒𝐞𝐫𝐯𝐢𝐜𝐢𝐨𝐬 𝐭𝐞𝐜𝐧𝐨𝐥𝐨́𝐠𝐢𝐜𝐨𝐬 🔮'
+  const instagramUrl = ''
 
   const vcard = `
 BEGIN:VCARD
@@ -44,8 +44,8 @@ END:VCARD`.trim()
       contextInfo: {
         mentionedJid: [m.sender],
         externalAdReply: {
-          title: '𝐀𝐍𝐆𝐄𝐋 𝐁𝐎𝐓 🧨',
-          body: '𝐀𝐍𝐆𝐄𝐋 🧨',
+          title: '𝐁𝐮𝐮 𝐛𝐨𝐭 🔮',
+          body: '𝐁𝐮𝐮 𝐛𝐨𝐭 🔮',
           thumbnailUrl: imageUrl,
           sourceUrl: instagramUrl,
           mediaType: 1,
@@ -60,6 +60,7 @@ END:VCARD`.trim()
 
 handler.help = ['owner']
 handler.tags = ['owner']
-handler.customPrefix = /^(\.owner|owner)$/i
+handler.customPrefix = /^\.?(owner|.owner)$/i;
+handler.command = new RegExp();
 handler.register = false
 export default handler

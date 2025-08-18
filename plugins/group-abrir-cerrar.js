@@ -24,10 +24,11 @@ let handler = async (m, { conn }) => {
   if (!isClose) return;
 
   try {
+    // Ejecutar cambio sin validar explícitamente permisos
     await conn.groupSettingUpdate(m.chat, isClose);
     await conn.sendMessage(m.chat, { react: { text: '✅', key: m.key } });
   } catch (e) {
-    // Puede fallar si el bot no es admin o no tiene permisos
+    // Silencioso: no hacer nada si falla
   }
 };
 

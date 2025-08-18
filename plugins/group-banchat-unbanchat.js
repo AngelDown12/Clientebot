@@ -16,15 +16,19 @@ let handler = async (m, { conn, command }) => {
 
 handler.command = /^(banchat|unbanchat)$/i
 handler.group = true
-handler.admin = true
-handler.botAdmin = true
+handler.rowner = true
 
 export default handler
 
-export async function before(m, { isAdmin, isOwner }) {
+export async function before(m, { isOwner }) {
   let chat = global.db.data.chats[m.chat]
-  if (chat?.isBanned && !isOwner && !isAdmin) {
+
+  if (chat?.isBanned) {
+    if (isOwner && /^unbanchat$/i.test(m.text)) {
+      return !0
+    }
     return !1
   }
+
   return !0
 }

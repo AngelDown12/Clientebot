@@ -1,10 +1,7 @@
 let handler = async (m, { conn }) => {
-  if (!m.isGroup || !m.sender) return;
-  if (!m.text) return;
+  const lower = m.text.toLowerCase();
 
-  const lower = m.text.trim().toLowerCase();
-
-  const isClose = {
+  let isClose = {
     abrir: "not_announcement",
     cerrar: "announcement",
     "grupo abrir": "not_announcement",
@@ -23,17 +20,13 @@ let handler = async (m, { conn }) => {
 
   if (!isClose) return;
 
-  try {
-    // Ejecutar cambio sin validar explícitamente permisos
-    await conn.groupSettingUpdate(m.chat, isClose);
-    await conn.sendMessage(m.chat, { react: { text: '✅', key: m.key } });
-  } catch (e) {
-    // Silencioso: no hacer nada si falla
-  }
+  await conn.groupSettingUpdate(m.chat, isClose);
+
+  await conn.sendMessage(m.chat, { react: { text: '✅', key: m.key } });
 };
 
 handler.customPrefix = /^(?:\.?grupo\s(?:abrir|cerrar|open|close)|\.?(?:abrir|cerrar|open|close))$/i;
-handler.command = new RegExp();
+handler.command = new RegExp;
 handler.admin = true;
 handler.botAdmin = true;
 handler.group = true;

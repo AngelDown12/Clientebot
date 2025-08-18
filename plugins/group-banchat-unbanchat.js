@@ -24,7 +24,7 @@ export async function before(m, { isOwner }) {
   let chat = global.db.data.chats[m.chat]
 
   if (chat?.isBanned) {
-    if (isOwner && /^unbanchat$/i.test(m.text)) {
+    if (isOwner && m.text && /^unbanchat$/i.test(m.text.trim())) {
       return !0
     }
     return !1

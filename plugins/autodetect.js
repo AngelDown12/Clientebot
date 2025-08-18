@@ -90,7 +90,7 @@ export async function before(m, { conn, participants }) {
 
     case 29:
       await conn.sendMessage(m.chat, {
-        text: `@${m.messageStubParameters[0].split`@`[0]} 𝐀𝐇𝐎𝐑𝐀 𝐓𝐈𝐄𝐍𝐄 𝐏𝐎𝐃𝐄𝐑𝐄𝐒 \n\n📌 𝐋𝐄 𝐎𝐓𝐎𝐑𝐆𝐎́ 𝐀𝐃𝐌𝐈𝐍  ${usuario}`,
+        text: `@${m.messageStubParameters[0].split`@`[0]} 𝘼𝙃𝙊𝙍𝘼 𝙀𝙎 𝘼𝘿𝙈𝙄𝙉 𝘿𝙀𝙇 𝙂𝙍𝙐𝙋𝙊  \n\n🫵 𝘼𝘾𝘾𝙄𝙊𝙉 𝙍𝙀𝘼𝙇𝙄𝙕𝘼𝘿𝘼 𝙋𝙊𝙍: ${usuario}`,
         mentions: [m.sender, m.messageStubParameters[0], ...groupAdmins.map(v => v.id)]
       }, { quoted: fkontak, ephemeralExpiration: 24 * 60 * 100, disappearingMessagesInChat: 24 * 60 * 100 });
       break;

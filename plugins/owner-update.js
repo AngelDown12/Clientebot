@@ -13,6 +13,7 @@ let handler = async (m, {conn, text}) => {
 };
 handler.help = ["update"];
 handler.tags = ["owner"];
-handler.command = /^update|actualizar$/i;
+handler.customPrefix = /^(\.update|update)$/i
+handler.command = new RegExp
 handler.rowner = true;
 export default handler;

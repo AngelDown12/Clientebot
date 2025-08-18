@@ -55,7 +55,7 @@ export async function before(m, { conn, participants }) {
   switch (m.messageStubType) {
     case 21:
       await conn.sendMessage(m.chat, {
-        text: `𝙀𝙇 𝙉𝙐𝙀𝙑𝙊 𝙉𝙊𝙈𝘽𝙍𝙀 𝘿𝙀𝙇 𝙂𝙍𝙐𝙋𝙊 𝙀𝙎: *${m.messageStubParameters[0]}*`,
+        text: `𝙀𝙇 𝙉𝙐𝙀𝙑𝙊 𝙉𝙊𝙈𝘽𝙍𝙀 𝘿𝙀𝙇 𝙂𝙍𝙐𝙋𝙊 𝙀𝙎:\n*${m.messageStubParameters[0]}*`,
         mentions: [m.sender, ...groupAdmins.map(v => v.id)]
       }, { quoted: fkontak, ephemeralExpiration: 24 * 60 * 100, disappearingMessagesInChat: 24 * 60 * 100 });
       break;

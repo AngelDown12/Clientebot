@@ -1,7 +1,10 @@
 let handler = async (m, { conn }) => {
-  const lower = m.text.toLowerCase();
+  if (!m.isGroup || !m.sender) return;
+  if (!m.text) return;
 
-  let isClose = {
+  const lower = m.text.trim().toLowerCase();
+
+  const isClose = {
     abrir: "not_announcement",
     cerrar: "announcement",
     "grupo abrir": "not_announcement",
@@ -20,13 +23,16 @@ let handler = async (m, { conn }) => {
 
   if (!isClose) return;
 
-  await conn.groupSettingUpdate(m.chat, isClose);
-
-  await conn.sendMessage(m.chat, { react: { text: '✅', key: m.key } });
+  try {
+    await conn.groupSettingUpdate(m.chat, isClose);
+    await conn.sendMessage(m.chat, { react: { text: '✅', key: m.key } });
+  } catch (e) {
+    // Puede fallar si el bot no es admin o no tiene permisos
+  }
 };
 
 handler.customPrefix = /^(?:\.?grupo\s(?:abrir|cerrar|open|close)|\.?(?:abrir|cerrar|open|close))$/i;
-handler.command = new RegExp; // sin prefijo
+handler.command = new RegExp();
 handler.admin = true;
 handler.botAdmin = true;
 handler.group = true;

@@ -69,7 +69,7 @@ export async function before(m, { conn, participants }) {
 
     case 24:
   await conn.sendMessage(m.chat, {
-    text: `📌 LA DESCRIPCIÓN HA SIDO MODIFICADA`,
+    text: `🫵 𝙇𝘼 𝘿𝙀𝙎𝘾𝙍𝙄𝙋𝘾𝙄𝙊𝙉 𝘼𝙃 𝙎𝙄𝘿𝙊 𝙈𝙊𝘿𝙄𝙁𝙄𝘾𝘼𝘿𝘼 𝙋𝙊𝙍: ${usuario}`,
     mentions: [m.sender]
   }, { quoted: fkontak, ephemeralExpiration: 24 * 60 * 100, disappearingMessagesInChat: 24 * 60 * 100 });
   break;

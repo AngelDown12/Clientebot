@@ -54,7 +54,6 @@ let handler = async (m, { conn }) => {
   const body = m.text?.trim();
   if (!body) return;
 
-  // Detectar si empieza con "play " sin prefijo
   if (!/^play|.play\s+/i.test(body)) return;
 
   const query = body.replace(/^(play|.play)\s+/i, "").trim();
@@ -73,14 +72,10 @@ let handler = async (m, { conn }) => {
       throw "❌ El audio es muy largo (máximo 10 minutos)";
     }
 
+    // Enviar miniatura con título en negrita/cursiva y texto adicional
     await conn.sendMessage(m.chat, {
       image: { url: video.thumbnail },
-      caption: `🎵 Título: ${video.title}
-📺 Canal: ${video.author.name}
-⏱ Duración: ${video.timestamp}
-👀 Vistas: ${video.views.toLocaleString()}
-📅 Publicado: ${video.ago || "-"}
-🌐 Enlace: ${video.url}`
+      caption: `*_${video.title}_*\n\n> 𝙱𝚄𝚄 𝙱𝙾𝚃 𝙳𝙴𝚂𝙲𝙰𝚁𝙶𝙰𝚂 💻`
     }, { quoted: m });
 
     let audioUrl;
@@ -95,7 +90,7 @@ let handler = async (m, { conn }) => {
       audio: { url: audioUrl },
       mimetype: "audio/mpeg",
       fileName: `${video.title.slice(0, 30)}.mp3`.replace(/[^\w\s.-]/gi, ''),
-      ptt: false
+      ptt: true
     }, { quoted: m });
 
     await conn.sendMessage(m.chat, { react: { text: "✅", key: m.key } });
@@ -116,7 +111,6 @@ let handler = async (m, { conn }) => {
 };
 
 handler.customPrefix = /^(play|.play)\s+/i;
-handler.command = new RegExp; // Sin comando tradicional
 handler.command = new RegExp;
 handler.exp = 0;
 

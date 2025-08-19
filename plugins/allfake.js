@@ -59,7 +59,7 @@ newsletterName: '',
 },
 externalAdReply: { 
 showAdAttribution: true,
-title: '𝗕𝗨𝗨 - 𝘽𝙊𝙏',
+title: '👤VIP.User Josee47🇷🇺',
 body: '',
 previewType: "PHOTO",
 thumbnailUrl: 'https://cdn.russellxz.click/9358a527.jpeg',

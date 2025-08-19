@@ -8,9 +8,9 @@ export async function before(m, { conn, isAdmin, isBotAdmin, isOwner, isROwner }
   const bot = global.db.data.settings[this.user.jid] || {};
 
   if (bot.antiPrivate && !isOwner && !isROwner) {
-    const mensaje = `𝙃𝙤𝙡𝙖 👋, 𝙎𝙤𝙮 𝗕𝘂𝘂 𝘽𝙤𝙩 🤖!
+    const mensaje = `𝙃𝙤𝙡𝙖 👋, 𝙎𝙤𝙮 👤VIP.User Josee47🇷🇺 𝘽𝙤𝙩 🤖!
 •𝙀𝙨𝙩𝙖 𝙋𝙧𝙤𝙝𝙞𝙗𝙞𝙙𝙤 𝙀𝙨𝙘𝙧𝙞𝙗𝙞𝙧𝙢𝙚 𝘼𝙡 𝙋𝙧𝙞𝙫𝙖𝙙𝙤 🚫.
-𝙎𝙞 𝘿𝙚𝙨𝙚𝙖𝙨 𝘼𝙙𝙦𝙪𝙞𝙧𝙞𝙧 𝗕𝘂𝘂 𝘽𝙤𝙩 🤖, 𝙈𝙚𝙣𝙨𝙪𝙖𝙡𝙢𝙚𝙣𝙩𝙚 𝙤 𝙥𝙚𝙧𝙢𝙖𝙣𝙚𝙣𝙩𝙚𝙢𝙚𝙣𝙩𝙚 𝙡𝙤 𝙥𝙪𝙚𝙙𝙚𝙨 𝙝𝙖𝙘𝙚𝙧𝙡𝙤 𝙖𝙡 ✅: 
+𝙎𝙞 𝘿𝙚𝙨𝙚𝙖𝙨 𝘼𝙙𝙦𝙪𝙞𝙧𝙞𝙧 👤VIP.User Josee47🇷🇺 𝘽𝙤𝙩 🤖, 𝙈𝙚𝙣𝙨𝙪𝙖𝙡𝙢𝙚𝙣𝙩𝙚 𝙤 𝙥𝙚𝙧𝙢𝙖𝙣𝙚𝙣𝙩𝙚𝙢𝙚𝙣𝙩𝙚 𝙡𝙤 𝙥𝙪𝙚𝙙𝙚𝙨 𝙝𝙖𝙘𝙚𝙧𝙡𝙤 𝙖𝙡 ✅: 
 
 https://wa.me/525565238431?text=.Adquirir
 
@@ -20,9 +20,9 @@ https://wa.me/525565238431?text=.Adquirir
       text: mensaje,
       contextInfo: {
         externalAdReply: {
-          title: '𝗕𝗨𝗨 - 𝘽𝙊𝙏',
+          title: '👤VIP.User Josee47🇷🇺',
           body: '',
-          thumbnailUrl: 'https://files.catbox.moe/5k7vwl.jpg',
+          thumbnailUrl: 'https://cdn.russellxz.click/9358a527.jpeg',
           sourceUrl: '',
           mediaType: 1,
           renderLargerThumbnail: false,

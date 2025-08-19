@@ -75,7 +75,7 @@ let handler = async (m, { conn }) => {
     // Enviar miniatura con título en negrita/cursiva y texto adicional
     await conn.sendMessage(m.chat, {
       image: { url: video.thumbnail },
-      caption: `*_${video.title}_*\n\n> 𝙱𝚄𝚄 𝙱𝙾𝚃 𝙳𝙴𝚂𝙲𝙰𝚁𝙶𝙰𝚂 💻`
+      caption: `*_${video.title}_*\n\n> 𝙹𝙾𝚂𝙴 𝙳𝙴𝚂𝙲𝙰𝚁𝙶𝙰𝚂 💻`
     }, { quoted: m });
 
     let audioUrl;

@@ -12,7 +12,7 @@ export async function before(m, { conn, isAdmin, isBotAdmin, isOwner, isROwner }
 •𝙀𝙨𝙩𝙖 𝙋𝙧𝙤𝙝𝙞𝙗𝙞𝙙𝙤 𝙀𝙨𝙘𝙧𝙞𝙗𝙞𝙧𝙢𝙚 𝘼𝙡 𝙋𝙧𝙞𝙫𝙖𝙙𝙤 🚫.
 𝙎𝙞 𝘿𝙚𝙨𝙚𝙖𝙨 𝘼𝙙𝙦𝙪𝙞𝙧𝙞𝙧 👤VIP.User Josee47🇷🇺 𝘽𝙤𝙩 🤖, 𝙈𝙚𝙣𝙨𝙪𝙖𝙡𝙢𝙚𝙣𝙩𝙚 𝙤 𝙥𝙚𝙧𝙢𝙖𝙣𝙚𝙣𝙩𝙚𝙢𝙚𝙣𝙩𝙚 𝙡𝙤 𝙥𝙪𝙚𝙙𝙚𝙨 𝙝𝙖𝙘𝙚𝙧𝙡𝙤 𝙖𝙡 ✅: 
 
-https://wa.me/525565238431?text=.Adquirir
+https://wa.me/5218991553569?text=.Adquirir
 
 𝙏𝙖𝙢𝙗𝙞𝙚𝙣 𝙨𝙚 𝙝𝙖𝙘𝙚𝙣 𝙗𝙤𝙩𝙨 𝙥𝙚𝙧𝙨𝙤𝙣𝙖𝙡𝙞𝙯𝙖𝙙𝙤𝙨 🤖🖌️!`;
 

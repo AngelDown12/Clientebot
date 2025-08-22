@@ -1,31 +1,173 @@
-import { sticker } from '../lib/sticker.js'
+import fs from 'fs';
+import path from 'path';
+import Crypto from 'crypto';
+import ffmpeg from 'fluent-ffmpeg';
+import webp from 'node-webpmux';
+import { downloadContentFromMessage } from '@whiskeysockets/baileys';
 
-let handler = async (m, { conn }) => {
-  let q = m.quoted ? m.quoted : m
-  let mime = (q.msg || q).mimetype || ''
+const tempFolder = path.join(process.cwd(), 'tmp/');
+if (!fs.existsSync(tempFolder)) fs.mkdirSync(tempFolder, { recursive: true });
 
-  // Solo acepta imagen, video o webp
-  if (!/image|video|webp/.test(mime)) 
-    return m.reply('☁️ Responda a una *imagen* o *video* para crear el sticker')
+const handler = async (msg, { conn }) => {
+  const chatId = msg.key.remoteJid;
+  const pref = global.prefixes?.[0] || ".";
 
-  // Descargar el archivo
-  let media = await q.download()
-  if (!media) return m.reply('⚠️ No pude descargar el archivo')
-
-  let stiker
   try {
-    // Generar el sticker directo del buffer
-    stiker = await sticker(media, false, '', '')  
-  } catch (e) {
-    console.error(e)
-    return m.reply('⚠️ Error al crear el sticker')
+    // 1. Buscar media en el mensaje directo
+    let quoted = null;
+    let mediaType = null;
+
+    if (msg.message?.imageMessage) {
+      quoted = msg.message;
+      mediaType = "image";
+    } else if (msg.message?.videoMessage) {
+      quoted = msg.message;
+      mediaType = "video";
+    }
+
+    // 2. Si no hay media directa, revisar si hay quoted
+    if (!quoted) {
+      const q = msg.message?.extendedTextMessage?.contextInfo?.quotedMessage;
+      if (q?.imageMessage) {
+        quoted = q;
+        mediaType = "image";
+      } else if (q?.videoMessage) {
+        quoted = q;
+        mediaType = "video";
+      }
+    }
+
+    if (!quoted || !mediaType) {
+      return await conn.sendMessage(chatId, {
+        text: `☁️ Responde a una *imagen* o *video* para crear el sticker`
+      }, { quoted: msg });
+    }
+
+    await conn.sendMessage(chatId, { react: { text: '🛠️', key: msg.key } });
+
+    // Descargar media
+    const mediaStream = await downloadContentFromMessage(
+      quoted[`${mediaType}Message`],
+      mediaType
+    );
+    let buffer = Buffer.alloc(0);
+    for await (const chunk of mediaStream) buffer = Buffer.concat([buffer, chunk]);
+
+    const metadata = { packname: ``, author: `` };
+
+    const sticker = mediaType === 'image'
+      ? await writeExifImg(buffer, metadata)
+      : await writeExifVid(buffer, metadata);
+
+    await conn.sendMessage(chatId, { sticker: { url: sticker } }, { quoted: msg });
+
+    await conn.sendMessage(chatId, { react: { text: '✅', key: msg.key } });
+
+  } catch (err) {
+    console.error('❌ Error en sticker s:', err);
+    await conn.sendMessage(chatId, { text: '❌ *Hubo un error al procesar el sticker.*' }, { quoted: msg });
+    await conn.sendMessage(chatId, { react: { text: '❌', key: msg.key } });
   }
+};
 
-  if (stiker) 
-    await conn.sendFile(m.chat, stiker, 'sticker.webp', '', m, true)
+handler.command = ['s'];
+export default handler;
+
+// === FUNCIONES AUXILIARES ===
+function randomFileName(ext) {
+  return `${Crypto.randomBytes(6).readUIntLE(0, 6).toString(36)}.${ext}`;
 }
-handler.help = ['s', 'sticker', 'stiker']
-handler.tags = ['sticker']
-handler.command = ['s', 'sticker', 'stiker']
 
-export default handler
+async function imageToWebp(media) {
+  const tmpIn = path.join(tempFolder, randomFileName('jpg'));
+  const tmpOut = path.join(tempFolder, randomFileName('webp'));
+  fs.writeFileSync(tmpIn, media);
+
+  await new Promise((resolve, reject) => {
+    ffmpeg(tmpIn)
+      .on('error', reject)
+      .on('end', resolve)
+      .addOutputOptions([
+        "-vcodec", "libwebp",
+        "-vf", "scale='min(320,iw)':min'(320,ih)':force_original_aspect_ratio=decrease,fps=15,pad=320:320:-1:-1:color=white@0.0,split[a][b];[a]palettegen=reserve_transparent=on:transparency_color=ffffff[p];[b][p]paletteuse"
+      ])
+      .toFormat('webp')
+      .save(tmpOut);
+  });
+
+  const buff = fs.readFileSync(tmpOut);
+  fs.unlinkSync(tmpIn);
+  fs.unlinkSync(tmpOut);
+  return buff;
+}
+
+async function videoToWebp(media) {
+  const tmpIn = path.join(tempFolder, randomFileName('mp4'));
+  const tmpOut = path.join(tempFolder, randomFileName('webp'));
+  fs.writeFileSync(tmpIn, media);
+
+  await new Promise((resolve, reject) => {
+    ffmpeg(tmpIn)
+      .on('error', reject)
+      .on('end', resolve)
+      .addOutputOptions([
+        "-vcodec", "libwebp",
+        "-vf", "scale='min(320,iw)':min'(320,ih)':force_original_aspect_ratio=decrease,fps=15,pad=320:320:-1:-1:color=white@0.0,split[a][b];[a]palettegen=reserve_transparent=on:transparency_color=ffffff[p];[b][p]paletteuse",
+        "-loop", "0",
+        "-ss", "00:00:00",
+        "-t", "00:00:05",
+        "-preset", "default",
+        "-an",
+        "-vsync", "0"
+      ])
+      .toFormat('webp')
+      .save(tmpOut);
+  });
+
+  const buff = fs.readFileSync(tmpOut);
+  fs.unlinkSync(tmpIn);
+  fs.unlinkSync(tmpOut);
+  return buff;
+}
+
+async function writeExifImg(media, metadata) {
+  const wMedia = await imageToWebp(media);
+  return await addExif(wMedia, metadata);
+}
+
+async function writeExifVid(media, metadata) {
+  const wMedia = await videoToWebp(media);
+  return await addExif(wMedia, metadata);
+}
+
+async function addExif(webpBuffer, metadata) {
+  const tmpIn = path.join(tempFolder, randomFileName('webp'));
+  const tmpOut = path.join(tempFolder, randomFileName('webp'));
+  fs.writeFileSync(tmpIn, webpBuffer);
+
+  const json = {
+    "sticker-pack-id": "azura-ultra&cortana",
+    "sticker-pack-name": metadata.packname,
+    "sticker-pack-publisher": metadata.author,
+    "emojis": metadata.categories || [""]
+  };
+
+  const exifAttr = Buffer.from([
+    0x49, 0x49, 0x2A, 0x00,
+    0x08, 0x00, 0x00, 0x00,
+    0x01, 0x00, 0x41, 0x57,
+    0x07, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x16, 0x00,
+    0x00, 0x00
+  ]);
+  const jsonBuff = Buffer.from(JSON.stringify(json), "utf-8");
+  const exif = Buffer.concat([exifAttr, jsonBuff]);
+  exif.writeUIntLE(jsonBuff.length, 14, 4);
+
+  const img = new webp.Image();
+  await img.load(tmpIn);
+  img.exif = exif;
+  await img.save(tmpOut);
+  fs.unlinkSync(tmpIn);
+  return tmpOut;
+}
